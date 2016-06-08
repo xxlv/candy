@@ -1,11 +1,17 @@
-# ------------------------------------------------------------------------------
+# Description:
 # 周报助手 自动生成周报
 #
-# @author x
-# @email  lvxang119@gmail.com
-# @github https://github.com/xxlv
-# @blog  http://www.0x10.me/
-# ------------------------------------------------------------------------------
+# Dependencies:
+#   None
+#
+# Configuration:
+#   None
+#
+# Commands:
+#
+# Author:
+#   x
+
 
 # 邮件相关配置
 config= require './config'
@@ -59,9 +65,7 @@ sendmail=(f,to,cc,body='',html='')->
     transporter.sendMail mailoptions,(error,info)->
         report_staus error,info
 
-# --------------------------------------------------------
-# ------------------------ 发送邮件------------------------
-# --------------------------------------------------------
+
 module.exports=(robot)->
     robot.hear /#gen a new weekly report/i,(res)->
         # 获取最新hash

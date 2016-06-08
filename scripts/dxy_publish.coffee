@@ -1,11 +1,18 @@
-# ------------------------------------------------------------------------------
-# 丁香园 站点发布脚本，自动给管理员发送发布邮件
+# Description:
+#  丁香园 站点发布脚本，自动给管理员发送发布邮件
 #
-# @author x
-# @email  lvxang119@gmail.com
-# @github https://github.com/xxlv
-# @blog  http://www.0x10.me/
-# ------------------------------------------------------------------------------
+# Dependencies:
+#   None
+#
+# Configuration:
+#   None
+#
+# Commands:
+#
+# Author:
+#   x
+
+
 config=require './config'
 
 # 邮件相关配置

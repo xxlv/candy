@@ -1,11 +1,17 @@
-# ------------------------------------------------------------------------------
-# Virtual Station 项目助手
+# Description:
+#  Virtual Station 项目助手
 #
-# @author x
-# @email  lvxang119@gmail.com
-# @github https://github.com/xxlv
-# @blog  http://www.0x10.me/
-# ------------------------------------------------------------------------------
+# Dependencies:
+#   None
+#
+# Configuration:
+#   None
+#
+# Commands:
+#
+# Author:
+#   x
+
 
 # 邮件相关配置
 config= require './config'

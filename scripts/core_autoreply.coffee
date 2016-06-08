@@ -1,11 +1,17 @@
-# ------------------------------------------------------------------------------
-# 自动维护微信
+# Description:
+#  自动维护微信
 #
-# @author x
-# @email  lvxang119@gmail.com
-# @github https://github.com/xxlv
-# @blog  http://www.0x10.me/
-# ------------------------------------------------------------------------------
+# Dependencies:
+#   None
+#
+# Configuration:
+#   None
+#
+# Commands:
+#
+# Author:
+#   x
+
 config= require './config'
 
 BAIDU_API_KEY=config.BAIDU_API_KEY
@@ -18,9 +24,6 @@ BAIDU_TURING_KEY=config.BAIDU_TURING_KEY
 #         wxrobot=res.robot.adapter.wxbot
 #         wxrobot.sendMessage wxrobot.myUserName,group,user,body,(resp, resBody, opts) ->
 #         # TODO
-
-
-
 
 module.exports = (robot) ->
 
