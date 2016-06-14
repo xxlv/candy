@@ -38,17 +38,19 @@ module.exports = (robot) ->
     #             res.send b.retData[0].province_cn+b.retData[0].district_cn+'的天气'
     # 图灵机器人
     robot.hear /(.*?)/, (res)->
+
         input=res.match['input']
-        # wxrobot=res.robot.adapter.wxbot
-        # path=''
-        # wxrobot.webWxUploadAndSendMedia wxrobot.myUserName ,'',wxrobot.myUserName,path
-        turingurl=BAIDU_TURING_URL+'?key='+BAIDU_TURING_KEY+'&info='+input+"&userid="+res.envelope.user.id
-        robot.http(turingurl).header('apikey',BAIDU_API_KEY).get() (e,r,b)->
-            if (!input.match(/&lt;msg/))
-                b=JSON.parse b
-                setTimeout ()->
+        if input[0]!='@'
+            # wxrobot=res.robot.adapter.wxbot
+            path=''
+            # wxrobot.webWxUploadAndSendMedia wxrobot.myUserName ,'',wxrobot.myUserName,path
+            turingurl=BAIDU_TURING_URL+'?key='+BAIDU_TURING_KEY+'&info='+input+"&userid="+res.envelope.user.id
+            robot.http(turingurl).header('apikey',BAIDU_API_KEY).get() (e,r,b)->
+                if (!input.match(/&lt;msg/))
+                    b=JSON.parse b
                     res.send b.text
-                , 1000
+                    # setTimeout ()->
+                    # , 1000
 
 
 

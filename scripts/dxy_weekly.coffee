@@ -9,6 +9,8 @@
 #
 # Commands:
 #
+# @gen a new weekly report - 生成新周报
+#
 # Author:
 #   x
 
@@ -67,7 +69,7 @@ sendmail=(f,to,cc,body='',html='')->
 
 
 module.exports=(robot)->
-    robot.hear /#gen a new weekly report/i,(res)->
+    robot.hear /@gen a new weekly report/i,(res)->
         # 获取最新hash
         from =VS_MAIL_FROM
         to = VS_MAIL_TO

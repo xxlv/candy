@@ -132,7 +132,7 @@ module.exports=(robot)->
                 reason=[commit.title]
                 html=genPushMailBody manager,branch,commitHash,reason,commit.author_name
 
-                # sendmail from,to,cc,body,html
+                sendmail from,to,cc,body,html
 
                 msg="VS 新版本发布报告😏😏😏\n"
                 msg+="邮件发送给  #{manager}\n"
@@ -142,4 +142,4 @@ module.exports=(robot)->
                 msg+='输入#vs-help 查看全部指令'
 
                 res.send msg
-                # sendMass res,msg,group,'' if group?
+                sendMass res,msg,group,'' if group?
