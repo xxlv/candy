@@ -88,16 +88,16 @@ sendmail=(f,to,cc,body='',html='')->
 
 sendMass=(res,body,group,user='')->
 
-    wxrobot=res.robot.adapter.wxbot
+    # wxrobot=res.robot.adapter.wxbot
     # console.log wxrobot.groupInfo
-    wxrobot.sendMessage wxrobot.myUserName,group,user,body,(resp, resBody, opts) ->
+    # wxrobot.sendMessage wxrobot.myUserName,group,user,body,(resp, resBody, opts) ->
     #
 
 
 module.exports=(robot)->
 
 
-    robot.hear /#vs-help/i,(res)->
+    robot.hear /@vs-help/i,(res)->
         help='#'+"vs-help (😃Can i help u ?)\n\n"
         help+='#'+"vs pub a new version (自动发送发布最新版本的邮件)\n\n"
         help+='#'+"使用方法，在该群输入指令，可自动执行计划\n\n"
@@ -106,12 +106,18 @@ module.exports=(robot)->
 
     # 发布一个新版本 自动发送邮件给管理员
     # 自动从gitlab分支获取，并且将commit自动填充到摘要里面
-    robot.hear /#vs pub a new version/i,(res)->
-        wxrobot=res.robot.adapter.wxbot
-        group=''
-        for k,v of wxrobot.groupInfo
-            if v == 'VS专职团队'
-                group = k
+    robot.hear /@vs pub a new version(!?)/i,(res)->
+
+        # wxrobot=res.robot.adapter.wxbot
+        # group=''
+        # for k,v of wxrobot.groupInfo
+        #     if v == 'VS专职团队'
+        #         group = k
+        if '!'==res.match[1]
+            preview=false
+        else
+            preview=true
+
 
         api=GITLAB_BASE_URL+"/api/v3/projects/"+GITLAB_PROJECT_ID+"/repository/commits/"+VS_GITLAB_BRANCH
         robot.http(api).header('PRIVATE-TOKEN', GITLAB_TOKEN).get() (err,r,body)->
@@ -132,14 +138,19 @@ module.exports=(robot)->
                 reason=[commit.title]
                 html=genPushMailBody manager,branch,commitHash,reason,commit.author_name
 
-                sendmail from,to,cc,body,html
 
                 msg="VS 新版本发布报告😏😏😏\n"
                 msg+="邮件发送给  #{manager}\n"
                 msg+="分支 : #{branch}\n"
                 msg+="最后修改人 : #{commit.author_name}\n"
                 msg+="Commit : #{commitHash}\n"
+                msg+="reson : #{reason}\n"
                 msg+='输入#vs-help 查看全部指令'
 
+                unless preview
+                    console.log 'send mail to '+to
+                    sendmail from,to,cc,body,html
+
                 res.send msg
+
                 sendMass res,msg,group,'' if group?

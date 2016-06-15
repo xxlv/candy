@@ -24,12 +24,13 @@ class HubotCron
 
 
 runCrons=(robot)->
+
     path=__dirname+'/cron/'
     if Fs.existsSync(path)
         for file in Fs.readdirSync(path).sort()
             try
                 script = require(path+file)
-                new script(robot).run()
+                new script().run(robot)
             catch error
                 console.log "#{error.stack}"
 
@@ -37,10 +38,11 @@ runCrons=(robot)->
 module.exports = (robot) ->
 
     runCrons robot
-    
+
     pattern='* * * * *'
     timezone='Asia/Shanghai'
-    fn=(robot)->
+
+    fn=()->
         runCrons robot
 
     new HubotCron pattern,timezone,fn

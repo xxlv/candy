@@ -37,11 +37,11 @@ module.exports = (robot) ->
     #         if b.errNum==0
     #             res.send b.retData[0].province_cn+b.retData[0].district_cn+'的天气'
     # 图灵机器人
-    robot.hear /(.*?)/, (res)->
 
+    robot.hear /(.*?)/, (res)->
         input=res.match['input']
         if input[0]!='@'
-            # wxrobot=res.robot.adapter.wxbot
+            wxrobot=res.robot.adapter.wxbot
             path=''
             # wxrobot.webWxUploadAndSendMedia wxrobot.myUserName ,'',wxrobot.myUserName,path
             turingurl=BAIDU_TURING_URL+'?key='+BAIDU_TURING_KEY+'&info='+input+"&userid="+res.envelope.user.id
@@ -50,6 +50,7 @@ module.exports = (robot) ->
                     b=JSON.parse b
                     res.send b.text
                     # setTimeout ()->
+                    #
                     # , 1000
 
 
