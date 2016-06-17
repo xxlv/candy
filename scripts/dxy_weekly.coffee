@@ -76,5 +76,5 @@ module.exports=(robot)->
         cc=VS_MAIL_CC
         body=''
         html=genWeeklyMailBody()
-        sendmail from,to,cc,body,html
-        res.send 'Well,Job done!'
+        # sendmail from,to,cc,body,html
+        res.send html

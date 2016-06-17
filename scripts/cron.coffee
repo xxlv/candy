@@ -4,6 +4,7 @@ chalk    = require('chalk')
 Fs=require 'fs'
 
 class HubotCron
+    
   constructor: (@pattern, @timezone, @fn, @context = global) ->
     @cronjob = new CronJob(
       @pattern
@@ -24,7 +25,6 @@ class HubotCron
 
 
 runCrons=(robot)->
-
     path=__dirname+'/cron/'
     if Fs.existsSync(path)
         for file in Fs.readdirSync(path).sort()
@@ -37,7 +37,6 @@ runCrons=(robot)->
 
 module.exports = (robot) ->
 
-    runCrons robot
 
     pattern='* * * * *'
     timezone='Asia/Shanghai'

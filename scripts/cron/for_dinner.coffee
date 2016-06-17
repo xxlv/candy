@@ -21,7 +21,6 @@ _get_current_evn_ip=()->
         return ifaces['en0'][1].address if ifaces['en0'][1].address
     ""
 _get_pm_count=()->
-    # todo
     2
 
 
@@ -30,10 +29,6 @@ _ask_for_dinner=(robot)->
     dinner_api='https://sim.dxy.cn/plugins/do/meeting/apply/411/82/6?ticket=DQPns5IcB06sGPjEzHYxfSNTXqXE4ehJ8VhAw231O0ZrXw99CQbaN3nKJNENdZX5'
     robot.http(dinner_api).post() (e,r,b)->
         # todo
-
-
-
-
 
 
 dinner=(robot)->
@@ -56,8 +51,7 @@ dinner=(robot)->
     if in_company && in_current_time && pm_aleady_done && not_ask_for_dinner
         _ask_for_dinner robot
 
-
 module.exports = (robot) ->
 
     run:(robot)->
-        dinner robot
+        # dinner robot

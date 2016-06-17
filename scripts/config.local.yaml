@@ -14,3 +14,6 @@ BAIDU_API_KEY: ''  #百度api key
 BAIDU_API_URL: 'http://apis.baidu.com/apistore/weatherservice/citylist'
 BAIDU_TURING_URL: 'http://apis.baidu.com/turing/turing/turing'
 BAIDU_TURING_KEY: '' #图灵机器人key
+
+WUNDERLIST_TOKEN: ''
+WUNDERLIST_CLIENT_ID: ''
