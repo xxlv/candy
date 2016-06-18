@@ -20,7 +20,10 @@
     "hubot-weixin":"^1.0.6",
     "hubot-cron": ">= 0.1.0",
     "hubot-slack":"*",
-    "mysql":"*"
+    "cli-table":"*",
+    "gitlab":"*",
+    "mysql":"*",
+
   },
   "engines": {
     "node": "0.10.x"

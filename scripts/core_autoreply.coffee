@@ -30,14 +30,14 @@ BAIDU_TURING_KEY=config.BAIDU_TURING_KEY
 
 module.exports = (robot) ->
 
-    # robot.hear /(.*?)/, (res)->
-    #     input=res.match['input']
-    #     if input[0]!='@'
-    #         wxrobot=res.robot.adapter.wxbot
-    #         path=''
-    #         # wxrobot.webWxUploadAndSendMedia wxrobot.myUserName ,'',wxrobot.myUserName,path
-    #         turingurl=BAIDU_TURING_URL+'?key='+BAIDU_TURING_KEY+'&info='+input+"&userid="+res.envelope.user.id
-    #         robot.http(turingurl).header('apikey',BAIDU_API_KEY).get() (e,r,b)->
-    #             if (!input.match(/&lt;msg/))
-    #                 b=JSON.parse b
-    #                 res.send chalk.bold b.text
+    robot.hear /(.*?)/, (res)->
+        input=res.match['input']
+        if input[0]!='@'
+            wxrobot=res.robot.adapter.wxbot
+            path=''
+            # wxrobot.webWxUploadAndSendMedia wxrobot.myUserName ,'',wxrobot.myUserName,path
+            turingurl=BAIDU_TURING_URL+'?key='+BAIDU_TURING_KEY+'&info='+input+"&userid="+res.envelope.user.id
+            robot.http(turingurl).header('apikey',BAIDU_API_KEY).get() (e,r,b)->
+                if (!input.match(/&lt;msg/))
+                    b=JSON.parse b
+                    res.send b.text

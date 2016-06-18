@@ -1,5 +1,13 @@
 
 
+class MysqlAdapter
+
+    constructor:(@host,@user,@pass)->
+        @host=@host
+        @user=@user
+        @pass=@pass
+
+
 class EventAdapter
 
     constructor:(@adapter)->
@@ -15,25 +23,10 @@ class EventAdapter
         @adapter.delete k
 
 
-
-
 class EventLog extends EventAdapter
 
     constructor:(@adapter) ->
         super @adapter
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports=EventLog

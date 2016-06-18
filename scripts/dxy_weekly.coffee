@@ -18,8 +18,8 @@
 # 邮件相关配置
 config= require './config'
 
-MAIL_USER=config.MAIL_USER #邮件用户名
-MAIL_PASS=config.MAIL_PASS     #邮件密码
+MAIL_USER=config.MAIL_USER      #邮件用户名
+MAIL_PASS=config.MAIL_PASS      #邮件密码
 
 # vs相关配置
 VS_MAIL_FROM ='lvxx@dxy.cn'
@@ -74,7 +74,6 @@ module.exports=(robot)->
         from =VS_MAIL_FROM
         to = VS_MAIL_TO
         cc=VS_MAIL_CC
-        body=''
         html=genWeeklyMailBody()
-        # sendmail from,to,cc,body,html
+        # sendmail from,to,cc,"",html
         res.send html
