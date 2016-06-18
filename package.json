@@ -24,8 +24,10 @@
     "gitlab":"*",
     "js-yaml":"*",
     "chalk":"*"
+
   },
   "engines": {
     "node": "0.10.x"
   }
+  
 }
