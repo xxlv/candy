@@ -21,9 +21,7 @@
     "hubot-cron": ">= 0.1.0",
     "hubot-slack":"*",
     "cli-table":"*",
-    "gitlab":"*",
-    "mysql":"*",
-
+    "gitlab":"*"
   },
   "engines": {
     "node": "0.10.x"
