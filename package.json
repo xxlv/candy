@@ -22,7 +22,8 @@
     "hubot-slack":"*",
     "cli-table":"*",
     "gitlab":"*",
-    "js-yaml":"*"
+    "js-yaml":"*",
+    "chalk":"*"
   },
   "engines": {
     "node": "0.10.x"
