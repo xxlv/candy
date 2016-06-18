@@ -23,11 +23,12 @@
     "cli-table":"*",
     "gitlab":"*",
     "js-yaml":"*",
-    "chalk":"*"
+    "chalk":"*",
+    "cron":"*"
 
   },
   "engines": {
     "node": "0.10.x"
   }
-  
+
 }
