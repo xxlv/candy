@@ -1,1 +1,1 @@
-web: bin/hubot -a slack
+web: HUBOT_SLACK_TOKEN=xoxp-44520912934-44524940768-50717888868-07a17177bb bin/hubot -a slack
