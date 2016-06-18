@@ -1,0 +1,20 @@
+
+MAIL_USER: "lvxx@dxy.cn"
+MAIL_PASS: "Lx1984x"
+GITLAB_TOKEN: 'G5nYrrZPAvckMTvsDds6'
+GITLAB_BASE_URL: 'http://gitlab.dxy.net'
+GITLAB_PROJECT_ID: 86
+
+VS_MAIL_FROM : 'lvxx@dxy.cn'
+VS_MAIL_TO:  'mzhang@dxy.cn'
+VS_PUBLISH_MANAGER: 'manager'
+VS_GITLAB_BRANCH: 'master'
+VS_MAIL_CC: ['lujb@dxy.cn','houjy@dxy.cn','lvxx@dxyer.com','wangjb@dxy.cn']
+BAIDU_API_KEY: 'f7347b399cf4a9ee3082a871aa93b0b3'
+
+BAIDU_API_URL: 'http://apis.baidu.com/apistore/weatherservice/citylist'
+BAIDU_TURING_URL: 'http://apis.baidu.com/turing/turing/turing'
+BAIDU_TURING_KEY: '879a6cb3afb84dbf4fc84a1df2ab7319'
+
+WUNDERLIST_TOKEN: '494ccb057f884093498b0bef23a68262e77473d897c57f628bc62dab8905'
+WUNDERLIST_CLIENT_ID: 'aa44b3cfc2507b359b20'
