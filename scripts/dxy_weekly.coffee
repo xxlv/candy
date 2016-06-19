@@ -27,7 +27,7 @@ MAIL_PASS=config.MAIL_PASS      #邮件密码
 # vs相关配置
 VS_MAIL_FROM ='lvxx@dxy.cn'
 VS_MAIL_TO= 'lvxinag119@gmail.com'
-VS_MAIL_CC=['1252804799@qq.com']
+VS_MAIL_CC=['1252804799@qq.com','lvxiang119@gmail.com']
 
 GITLAB_BASE_URL=config.GITLAB_BASE_URL
 GITLAB_TOKEN=config.GITLAB_TOKEN
@@ -100,7 +100,7 @@ getweekly_task=(cb)->
             if date>=week_begin_and_end[0] and date <=week_begin_and_end[1]
                 if commit.author_name==name
                     this_task.push commit
-                    
+
         tasks=
             t:message.title for message in this_task
             n:message for message in next_task
@@ -145,12 +145,21 @@ sendmail=(f,to,cc,body='',html='')->
 
 module.exports=(robot)->
 
-    robot.hear /@gen a new weekly report/i,(res)->
+    robot.hear /@gen a new weekly report(!?)/i,(res)->
+
+        preview=if '!'==res.match[1] then false else true
         # 获取最新hash
         from =VS_MAIL_FROM
         to = VS_MAIL_TO
         cc=VS_MAIL_CC
         getweekly_task (tasks)->
             html=genWeeklyMailBody(tasks.t,tasks.n)
-            sendmail from,to,cc,"",html
-            # res.send html
+            unless preview
+                sendmail from,to,cc,"",html
+            else
+                table=new (require 'cli-table') head:["Items preview"]
+                for task in tasks.t
+                    table.push [task]
+
+
+                res.send table.toString()
