@@ -24,7 +24,8 @@
     "gitlab":"*",
     "js-yaml":"*",
     "chalk":"*",
-    "cron":"*"
+    "cron":"*",
+    "moment":"*"
 
   },
   "engines": {
