@@ -134,10 +134,7 @@ module.exports=(robot)->
 
         preview=if '!'==res.match[1] then false else true
 
-        gitlab.projects.repository.showCommit GITLAB_PROJECT_ID,VS_GITLAB_BRANCH, (body)->
-
-            console.log body
-            
+        # gitlab.projects.repository.showCommit GITLAB_PROJECT_ID,VS_GITLAB_BRANCH, (body)->
             # console.log body
             # commit=JSON.parse(body)
             #
@@ -168,38 +165,35 @@ module.exports=(robot)->
             # res.send msg
             # _sendMass res,msg,group,'' if group?
 
-        # api=GITLAB_BASE_URL+"/api/v3/projects/"+GITLAB_PROJECT_ID+"/repository/commits/"+VS_GITLAB_BRANCH
-        # robot.http(api).header('PRIVATE-TOKEN', GITLAB_TOKEN).get() (err,r,body)->
-        #
-        #     if err
-        #         res.send "获取git commit 失败😓！"
-        #     else
-        #         commit=JSON.parse(body)
-        #
-        #         console.log commit
-        #         # 获取最新hash
-        #         from =VS_MAIL_FROM
-        #         to = VS_MAIL_TO
-        #         cc=VS_MAIL_CC
-        #         body=''
-        #         manager=VS_PUBLISH_MANAGER
-        #         branch=VS_GITLAB_BRANCH
-        #         commitHash=commit.short_id
-        #         reason=[commit.title]
-        #         html=_genPushMailBody manager,branch,commitHash,reason,commit.author_name
-        #
-        #
-        #         msg="VS 新版本发布报告😏😏😏\n"
-        #         msg+="邮件发送给  #{manager}\n"
-        #         msg+="分支 : #{branch}\n"
-        #         msg+="最后修改人 : #{commit.author_name}\n"
-        #         msg+="Commit : #{commitHash}\n"
-        #         msg+="reson : #{reason}\n"
-        #         msg+='输入#vs-help 查看全部指令'
-        #
-        #         unless preview
-        #             res.send chalk.red "\n"+'send mail to '+to+"\n"
-        #             # _sendmail from,to,cc,body,html
-        #
-        #         res.send msg
-        #         _sendMass res,msg,group,'' if group?
+        api=GITLAB_BASE_URL+"/api/v3/projects/"+GITLAB_PROJECT_ID+"/repository/commits/"+VS_GITLAB_BRANCH
+        robot.http(api).header('PRIVATE-TOKEN', GITLAB_TOKEN).get() (err,r,body)->
+
+            if err
+                res.send "获取git commit 失败😓！"
+            else
+                commit=JSON.parse(body)
+                # 获取最新hash
+                from =VS_MAIL_FROM
+                to = VS_MAIL_TO
+                cc=VS_MAIL_CC
+                body=''
+                manager=VS_PUBLISH_MANAGER
+                branch=VS_GITLAB_BRANCH
+                commitHash=commit.short_id
+                reason=[commit.title]
+                html=_genPushMailBody manager,branch,commitHash,reason,commit.author_name
+
+
+                msg="VS 新版本发布报告😏😏😏\n"
+                msg+="邮件发送给  #{manager}\n"
+                msg+="分支 : #{branch}\n"
+                msg+="最后修改人 : #{commit.author_name}\n"
+                msg+="Commit : #{commitHash}\n"
+                msg+="reson : #{reason}\n"
+
+                unless preview
+                    _sendmail from,to,cc,body,html
+                    res.send chalk.red "\n"+'send mail to '+to+"\n"
+                    _sendMass res,msg,group,'' if group?
+
+                res.send msg

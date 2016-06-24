@@ -47,7 +47,8 @@ _check_list=(lists,robot)->
                         dd=task.due_date
                         if parseInt(Date.parse compare_d) >= parseInt(Date.parse dd) and  parseInt(Date.parse today) <= parseInt(Date.parse dd)
                             if !task.completed
-                                console.log "Found a new task #{task.title},the due date is #{task.due_date} "
+                                # console.log "Found a new task #{task.title},the due date is #{task.due_date} "
+                                
 
 
 _check_share = (robot) ->

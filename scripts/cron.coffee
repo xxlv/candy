@@ -4,7 +4,7 @@ chalk    = require('chalk')
 Fs=require 'fs'
 
 class HubotCron
-    
+
   constructor: (@pattern, @timezone, @fn, @context = global) ->
     @cronjob = new CronJob(
       @pattern
@@ -44,4 +44,4 @@ module.exports = (robot) ->
     fn=()->
         runCrons robot
 
-    new HubotCron pattern,timezone,fn
+    # new HubotCron pattern,timezone,fn

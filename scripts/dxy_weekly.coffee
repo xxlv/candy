@@ -24,7 +24,7 @@ config= require './config'
 MAIL_USER=config.MAIL_USER      #邮件用户名
 MAIL_PASS=config.MAIL_PASS      #邮件密码
 
-# vs相关配置
+#  TODO vs相关配置
 VS_MAIL_FROM ='lvxx@dxy.cn'
 VS_MAIL_TO= 'lvxinag119@gmail.com'
 VS_MAIL_CC=['1252804799@qq.com','lvxiang119@gmail.com']
@@ -145,7 +145,7 @@ sendmail=(f,to,cc,body='',html='')->
 
 module.exports=(robot)->
 
-    robot.hear /@gen a new weekly report(!?)/i,(res)->
+    robot.hear /@gen\s*a\s*new\s*weekly\s*report(!?)/i,(res)->
 
         preview=if '!'==res.match[1] then false else true
         # 获取最新hash
@@ -160,6 +160,4 @@ module.exports=(robot)->
                 table=new (require 'cli-table') head:["Items preview"]
                 for task in tasks.t
                     table.push [task]
-
-
                 res.send table.toString()
