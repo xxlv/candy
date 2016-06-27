@@ -160,4 +160,4 @@ module.exports=(robot)->
                 table=new (require 'cli-table') head:["Items preview"]
                 for task in tasks.t
                     table.push [task]
-                res.send table.toString()
+                res.send "\n"+table.toString()

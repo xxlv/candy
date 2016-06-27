@@ -1,7 +1,7 @@
 
 { CronJob } = require 'cron'
-chalk    = require('chalk')
-Fs=require 'fs'
+chalk = require('chalk')
+Fs = require 'fs'
 
 class HubotCron
 
@@ -23,25 +23,22 @@ class HubotCron
   onTick: ->
     Function::call.apply @fn, @context
 
-
-runCrons=(robot)->
-    path=__dirname+'/cron/'
+runCrons = (robot) ->
+    path = __dirname + '/cron/'
     if Fs.existsSync(path)
         for file in Fs.readdirSync(path).sort()
             try
-                script = require(path+file)
+                script = require(path + file)
                 new script().run(robot)
             catch error
                 console.log "#{error.stack}"
 
 
 module.exports = (robot) ->
+    pattern = '* * * * *'
+    timezone = 'Asia/Shanghai'
+    runCrons robot
 
-
-    pattern='* * * * *'
-    timezone='Asia/Shanghai'
-
-    fn=()->
-        runCrons robot
-
+    # fn= ->
+    #     runCrons robot
     # new HubotCron pattern,timezone,fn

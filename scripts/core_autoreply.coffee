@@ -12,15 +12,15 @@
 # Author:
 #   x
 
-chalk= require 'chalk'
-config= require './config'
+chalk = require 'chalk'
+config = require './config'
 
-{EventLog}=require '../lib/eventlog'
+{EventLog} = require '../lib/eventlog'
 
-BAIDU_API_KEY=config.BAIDU_API_KEY
-BAIDU_API_URL=config.BAIDU_API_URL
-BAIDU_TURING_URL=config.BAIDU_TURING_URL
-BAIDU_TURING_KEY=config.BAIDU_TURING_KEY
+BAIDU_API_KEY = config.BAIDU_API_KEY
+BAIDU_API_URL = config.BAIDU_API_URL
+BAIDU_TURING_URL = config.BAIDU_TURING_URL
+BAIDU_TURING_KEY = config.BAIDU_TURING_KEY
 
 
 # sendMass=(res,body,group,user='')->
@@ -29,15 +29,14 @@ BAIDU_TURING_KEY=config.BAIDU_TURING_KEY
 #         # TODO
 
 module.exports = (robot) ->
-
-    robot.hear /(.*?)/, (res)->
-        input=res.match['input']
-        if input[0]!='@'
-            wxrobot=res.robot.adapter.wxbot
-            path=''
-            # wxrobot.webWxUploadAndSendMedia wxrobot.myUserName ,'',wxrobot.myUserName,path
-            turingurl=BAIDU_TURING_URL+'?key='+BAIDU_TURING_KEY+'&info='+input+"&userid="+res.envelope.user.id
-            robot.http(turingurl).header('apikey',BAIDU_API_KEY).get() (e,r,b)->
-                if (!input.match(/&lt;msg/))
-                    b=JSON.parse b
-                    res.send b.text
+    # robot.hear /(.*?)/, (res) ->
+    #     input = res.match['input']
+    #     if input[0]!='@'
+    #         wxrobot = res.robot.adapter.wxbot
+    #         path = ''
+    #         # wxrobot.webWxUploadAndSendMedia wxrobot.myUserName ,'',wxrobot.myUserName,path
+    #         turingurl = BAIDU_TURING_URL + '?key='+BAIDU_TURING_KEY+'&info=' + input + "&userid=" + res.envelope.user.id
+    #         robot.http(turingurl).header('apikey', BAIDU_API_KEY).get() (e, r, b) ->
+    #             if ( ! input.match(/&lt;msg/))
+    #                 b = JSON.parse b
+    #                 res.send b.text

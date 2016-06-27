@@ -25,6 +25,9 @@
     "js-yaml":"*",
     "chalk":"*",
     "cron":"*",
+    "moment":"*",
+    "googleapis":"*",
+    "google-auth-library":"*",
     "moment":"*"
 
   },

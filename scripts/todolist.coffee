@@ -31,11 +31,10 @@ get_todo_lists = (cb)->
 
 
 module.exports = (robot) ->
-
-    robot.hear /to\s*do/, (res)->
-        tb=new Table head:['Here is your today un-finshed plan']
-        get_todo_lists (lists)->
-            for list in lists
-                console.log list
+    # robot.hear /to\s*do/, (res)->
+    #     tb=new Table head:['Here is your today un-finshed plan']
+    #     get_todo_lists (lists)->
+    #         for list in lists
+    #             console.log list
                 # tb.push [list]
             # res.send '\n'+tb.toString()
