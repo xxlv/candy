@@ -22,7 +22,6 @@ BAIDU_API_URL = config.BAIDU_API_URL
 BAIDU_TURING_URL = config.BAIDU_TURING_URL
 BAIDU_TURING_KEY = config.BAIDU_TURING_KEY
 
-
 # sendMass=(res,body,group,user='')->
 #         wxrobot=res.robot.adapter.wxbot
 #         wxrobot.sendMessage wxrobot.myUserName,group,user,body,(resp, resBody, opts) ->

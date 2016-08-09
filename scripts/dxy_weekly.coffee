@@ -26,8 +26,8 @@ MAIL_PASS=config.MAIL_PASS      #邮件密码
 
 #  TODO vs相关配置
 VS_MAIL_FROM ='lvxx@dxy.cn'
-VS_MAIL_TO= 'lvxinag119@gmail.com'
-VS_MAIL_CC=['1252804799@qq.com','lvxiang119@gmail.com']
+VS_MAIL_TO= ['mzhang@dxy.cn','zjw@dxy.cn','biz@dxy.cn']
+VS_MAIL_CC=['wl@dxy.cn','fank@dxy.cn']
 
 GITLAB_BASE_URL=config.GITLAB_BASE_URL
 GITLAB_TOKEN=config.GITLAB_TOKEN
@@ -82,29 +82,32 @@ get_week_begin_and_end=()->
     [begin,end]
 
 getweekly_task=(cb)->
-    project_id=86
-    name='x'
-    week_begin_and_end=get_week_begin_and_end()
-
-    gitlab=(require 'gitlab')
-        url:GITLAB_BASE_URL
-        token:GITLAB_TOKEN
-
-    # 获取全部分支
-    # 扫描分支 按照本周日期遍历
-    gitlab.projects.listCommits id:project_id,(commits)->
-        this_task=[]
-        next_task=[]
-        for commit in commits
-            date=new Date commit.created_at
-            if date>=week_begin_and_end[0] and date <=week_begin_and_end[1]
-                if commit.author_name==name
-                    this_task.push commit
-
+    # project_id=86
+    # name='x'
+    # week_begin_and_end=get_week_begin_and_end()
+    #
+    # gitlab=(require 'gitlab')
+    #     url:GITLAB_BASE_URL
+    #     token:GITLAB_TOKEN
+    #
+    # # 获取全部分支
+    # # 扫描分支 按照本周日期遍历
+    # gitlab.projects.listCommits id:project_id,(commits)->
+    #     this_task=[]
+    #     next_task=[]
+    #     for commit in commits
+    #         date=new Date commit.created_at
+    #         if date>=week_begin_and_end[0] and date <=week_begin_and_end[1]
+    #             if commit.author_name==name
+    #                 this_task.push commit
+    #
+    #     tasks=
+    #         t:message.title for message in this_task
+    #         n:message for message in next_task
+    #
         tasks=
-            t:message.title for message in this_task
-            n:message for message in next_task
-
+            t:['修复丁当反馈','完成HCP后台管理（90%）']
+            n:['接入腾讯视频点播']
         cb tasks
 
 
@@ -152,6 +155,7 @@ module.exports=(robot)->
         from =VS_MAIL_FROM
         to = VS_MAIL_TO
         cc=VS_MAIL_CC
+
         getweekly_task (tasks)->
             html=genWeeklyMailBody(tasks.t,tasks.n)
             unless preview

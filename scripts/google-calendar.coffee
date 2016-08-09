@@ -117,6 +117,7 @@ listEvents = (auth,res) ->
       res.send 'The API returned an error: ' + err
       return
     events = response.items
+
     if events.length == 0
       res.send 'No upcoming events found.'
     else
@@ -132,7 +133,6 @@ listEvents = (auth,res) ->
 
 _makeTableHtml=(title,events)->
 
-    console.log events
     start=moment().startOf('week').toISOString()
     end =moment().endOf('week').toISOString()
     start=moment(start).format 'YYYY-MM-DD'
@@ -181,7 +181,8 @@ _makeTableHtml=(title,events)->
         i++
     html+="</tbody></table>"
 
-    html
+    header="<h3>Yeap!  <span style='color:red'>#{Math.round(((total-not_completed)/(total*1.0))*100)}%</span> ,Total : #{total} , Not Completed :#{not_completed}</h3>"
+    header+html
 
 
 mailEventsAutoWeek=(auth,res)->
@@ -207,7 +208,7 @@ mailEventsAutoWeek=(auth,res)->
         start=moment(start).format 'YYYY年MM月DD日'
         end =moment(end).format 'YYYY年MM月DD日'
 
-        mailto to,"Notice! #{start}-#{end} New plan report list comming!",html
+        mailto to,"Notice! #{start}-#{end} New plan report list is comming!",html
 
 
 module.exports = (robot) ->

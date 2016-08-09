@@ -1,5 +1,4 @@
 # Description:
-#  Virtual Station 项目助手
 #
 # Dependencies:
 #   None
@@ -9,9 +8,6 @@
 #
 # Commands:
 #
-# @vs flush  - 刷新时间戳
-# @vs flush online - 刷新线上时间戳
-# @vs publish a new version <!> - 预览一个新版本, !将触发上线
 # Author:
 #   x
 
@@ -25,7 +21,7 @@ _report_staus=(error,info)->
     if error
         console.log("发送邮件失败！"+ error)
     else
-        console.log info
+        console.log "send mail to #{info.accepted}"
 
 
 
@@ -48,7 +44,7 @@ sendmail=(to,subject,html)->
         subject:subject,
         text:body,
         html:html
-        
+
     simpleconfig=
         host:"smtp.exmail.qq.com",
         port:465,

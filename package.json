@@ -28,7 +28,8 @@
     "moment":"*",
     "googleapis":"*",
     "google-auth-library":"*",
-    "moment":"*"
+    "moment":"*",
+    "evernote":"*"
 
   },
   "engines": {
