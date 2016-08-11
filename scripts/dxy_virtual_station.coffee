@@ -16,30 +16,31 @@
 #   x
 
 
-config=require './config'
 chalk=require 'chalk'
 
-# 邮件相关配置
-MAIL_USER=config.MAIL_USER
-MAIL_PASS=config.MAIL_PASS
+# -----------------------------------------------------------------------------------------
+#  config info here , you can read from a safe config file
+# -----------------------------------------------------------------------------------------
+MAIL_USER= "lvxx@dxy.cn"
+MAIL_PASS= process.env.MAIL_PASS
+GITLAB_TOKEN= process.env.GITLAB_TOKEN
+GITLAB_BASE_URL= 'http://gitlab.dxy.net'
+GITLAB_PROJECT_ID= 86
+VS_MAIL_FROM= 'lvxx@dxy.cn'
+VS_MAIL_TO= 'mzhang@dxy.cn'
+VS_PUBLISH_MANAGER='manager'
+VS_GITLAB_BRANCH= 'master'
+VS_MAIL_CC= ['lujb@dxy.cn','houjy@dxy.cn','lvxx@dxyer.com','wangjb@dxy.cn']
 
-# gitlab相关配置
-GITLAB_TOKEN=config.GITLAB_TOKEN # TOKEN 非常重要
-GITLAB_BASE_URL=config.GITLAB_BASE_URL
-GITLAB_PROJECT_ID=config.GITLAB_PROJECT_ID # project id ，可以通过抓包获得，也可以走api，如果有权限的话
-
-# vs相关配置
-VS_MAIL_FROM =config.VS_MAIL_FROM
-VS_MAIL_TO= config.VS_MAIL_TO
-VS_PUBLISH_MANAGER=config.VS_PUBLISH_MANAGER
-VS_GITLAB_BRANCH=config.VS_GITLAB_BRANCH
-VS_MAIL_CC=config.VS_MAIL_CC
-
-
-# vs相关配置
+# VS flush time url
 vs_flush_time_online_url='http://e.dxy.cn/grep/cns/flush-time-rand'
 vs_flush_time_local_url='http://vs.sim.dxy.net/grep/cns/flush-time-rand'
 
+
+
+# ----------------------------------------------------------------------------------------
+#  do your job here
+# -----------------------------------------------------------------------------------------
 # init gitlab
 gitlab=(require 'gitlab')
     url:GITLAB_BASE_URL,

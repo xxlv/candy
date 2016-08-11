@@ -18,19 +18,17 @@
 chalk=require 'chalk'
 moment=require 'moment'
 
-# 邮件相关配置
-config= require './config'
-
-MAIL_USER=config.MAIL_USER      #邮件用户名
-MAIL_PASS=config.MAIL_PASS      #邮件密码
-
-#  TODO vs相关配置
+# -----------------------------------------------------------------------------------------
+#  config info here , you can read from a safe config file
+# -----------------------------------------------------------------------------------------
+MAIL_USER= "lvxx@dxy.cn"
+MAIL_PASS= process.env.MAIL_PASS
 VS_MAIL_FROM ='lvxx@dxy.cn'
 VS_MAIL_TO= ['mzhang@dxy.cn','zjw@dxy.cn','biz@dxy.cn']
 VS_MAIL_CC=['wl@dxy.cn','fank@dxy.cn']
+GITLAB_TOKEN= process.env.GITLAB_TOKEN
+GITLAB_BASE_URL= 'http://gitlab.dxy.net'
 
-GITLAB_BASE_URL=config.GITLAB_BASE_URL
-GITLAB_TOKEN=config.GITLAB_TOKEN
 
 #  生成邮件正文
 genWeeklyMailBody=(t,n)->

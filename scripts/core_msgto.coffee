@@ -13,12 +13,13 @@
 #   x
 
 chalk= require 'chalk'
-config= require './config'
 
+# -----------------------------------------------------------------------------------------
+#  config info here , you can read from a safe config file
+# -----------------------------------------------------------------------------------------
+MAIL_USER= "lvxx@dxy.cn"
+MAIL_PASS= process.env.MAIL_PASS
 
-# 邮件相关配置
-MAIL_USER=config.MAIL_USER
-MAIL_PASS=config.MAIL_PASS
 
 _sendmail=(subject,f,to,cc,body='',html='')->
 

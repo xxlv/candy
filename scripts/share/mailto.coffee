@@ -11,10 +11,9 @@
 # Author:
 #   x
 
-config=require '../config'
 # 邮件相关配置
-MAIL_USER=config.MAIL_USER
-MAIL_PASS=config.MAIL_PASS
+MAIL_USER= 'lvxx@dxy.cn'
+MAIL_PASS= process.env.MAIL_PASS
 
 # resport send status
 _report_staus=(error,info)->

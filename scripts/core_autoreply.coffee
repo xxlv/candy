@@ -13,14 +13,20 @@
 #   x
 
 chalk = require 'chalk'
-config = require './config'
 
-{EventLog} = require '../lib/eventlog'
 
-BAIDU_API_KEY = config.BAIDU_API_KEY
-BAIDU_API_URL = config.BAIDU_API_URL
-BAIDU_TURING_URL = config.BAIDU_TURING_URL
-BAIDU_TURING_KEY = config.BAIDU_TURING_KEY
+# -----------------------------------------------------------------------------------------
+#  config info here , you can read from a safe config file
+# -----------------------------------------------------------------------------------------
+BAIDU_API_KEY= 'f7347b399cf4a9ee3082a871aa93b0b3'
+BAIDU_API_URL= 'http://apis.baidu.com/apistore/weatherservice/citylist'
+BAIDU_TURING_URL= 'http://apis.baidu.com/turing/turing/turing'
+BAIDU_TURING_KEY= '879a6cb3afb84dbf4fc84a1df2ab7319'
+
+# -----------------------------------------------------------------------------------------
+# Dependency
+# -----------------------------------------------------------------------------------------
+# EMPTY
 
 # sendMass=(res,body,group,user='')->
 #         wxrobot=res.robot.adapter.wxbot
