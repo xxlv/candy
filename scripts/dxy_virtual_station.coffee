@@ -32,10 +32,14 @@ VS_PUBLISH_MANAGER='manager'
 VS_GITLAB_BRANCH= 'master'
 VS_MAIL_CC= ['lujb@dxy.cn','houjy@dxy.cn','lvxx@dxyer.com','wangjb@dxy.cn']
 
-# VS flush time url
-vs_flush_time_online_url='http://e.dxy.cn/grep/cns/flush-time-rand'
-vs_flush_time_local_url='http://vs.sim.dxy.net/grep/cns/flush-time-rand'
+SSH_PRIVATE_KEY_PATH='/Users/xxlv/.ssh/id_rsa'
+SERVER_IP='192.168.200.27'
+SERVER_USERNAME='dxy'
 
+
+# VS flush time url
+vs_flush_time_online_url='http://vs.dxy.cn/admin/cron/flush-time'
+vs_flush_time_local_url='http://vs.sim.dxy.net/admin/cron/flush-time'
 
 
 # ----------------------------------------------------------------------------------------
@@ -46,7 +50,7 @@ gitlab=(require 'gitlab')
     url:GITLAB_BASE_URL,
     token:GITLAB_TOKEN
 
-#  生成邮件正文
+#  Gen mail body
 _genPushMailBody=(manager,branch,commitHash,reasons=[],author='x')->
     """
     <div style="font-family: 'lucida Grande', Verdana; line-height: normal;">
@@ -66,13 +70,13 @@ _genPushMailBody=(manager,branch,commitHash,reasons=[],author='x')->
     </div>
     """
 
-# resport send status
+# Resport send status
 _report_staus=(error,info)->
     console.log(info)
     console.log("发送邮件失败！"+ error) if error
 
 
-# send mail
+# Send mail
 _sendmail=(f,to,cc,body='',html='')->
 
     user=MAIL_USER
@@ -108,16 +112,39 @@ _sendMass=(res,body,group,user='')->
         wxrobot=res.robot.adapter.wxbot
         wxrobot.sendMessage wxrobot.myUserName,group,user,body,(resp, resBody, opts) ->
 
+ssh_cp=(branch)->
+
+    Client=(require 'ssh2').Client
+    conn=new Client
+    cmd="cd /var/www/virtual-station && git pull origin #{branch}"
+    console.log "Run cmd : #{cmd}"
+    conn.on 'ready', ->
+        conn.exec cmd,(err,stream)->
+            if err
+                throw err
+            stream.on 'close',(code,signal)->
+                conn.end
+            .on 'data',(data)->
+                console.log data.toString()
+            .stderr.on 'data',(data)->
+                console.log "STDERR :#{data}"
+
+    .connect {
+        host:SERVER_IP,
+        port:22,
+        username:SERVER_USERNAME,
+        privateKey: require('fs').readFileSync(SSH_PRIVATE_KEY_PATH)
+    }
+
 
 module.exports=(robot)->
-    # help
+    # Help
     robot.hear /@vs-help/i,(res)->
         help='#'+"vs-help (😃Can i help u ?)\n\n"
         help+='#'+"vs pub a new version (自动发送发布最新版本的邮件)\n\n"
         help+='#'+"使用方法，在该群输入指令，可自动执行计划\n\n"
         res.send help
-
-    # flush time
+    # Flush time
     robot.hear /@\s?vs flush(.*)/i,(res)->
 
         if 'online'==res.match[1].trim()
@@ -128,43 +155,13 @@ module.exports=(robot)->
         robot.http(url).get() (e,r,b)->
             res.send "#{url} says: #{b}"
 
-
+    # ----------------------------------------------------------------------------------------
     # 发布一个新版本 自动发送邮件给管理员
     # 自动从gitlab分支获取，并且将commit自动填充到摘要里面
+    # -----------------------------------------------------------------------------------------
     robot.hear /@\s?vs publish a new version(!?)/i, (res)->
 
         preview=if '!'==res.match[1] then false else true
-
-        # gitlab.projects.repository.showCommit GITLAB_PROJECT_ID,VS_GITLAB_BRANCH, (body)->
-            # console.log body
-            # commit=JSON.parse(body)
-            #
-            # # 获取最新hash
-            # from =VS_MAIL_FROM
-            # to = VS_MAIL_TO
-            # cc=VS_MAIL_CC
-            # body=''
-            # manager=VS_PUBLISH_MANAGER
-            # branch=VS_GITLAB_BRANCH
-            # commitHash=commit.short_id
-            # reason=[commit.title]
-            # html=_genPushMailBody manager,branch,commitHash,reason,commit.author_name
-            #
-            #
-            # msg="VS 新版本发布报告😏😏😏\n"
-            # msg+="邮件发送给  #{manager}\n"
-            # msg+="分支 : #{branch}\n"
-            # msg+="最后修改人 : #{commit.author_name}\n"
-            # msg+="Commit : #{commitHash}\n"
-            # msg+="reson : #{reason}\n"
-            # msg+='输入#vs-help 查看全部指令'
-            #
-            # unless preview
-            #     res.send chalk.red "\n"+'send mail to '+to+"\n"
-            #     # _sendmail from,to,cc,body,html
-            #
-            # res.send msg
-            # _sendMass res,msg,group,'' if group?
 
         api=GITLAB_BASE_URL+"/api/v3/projects/"+GITLAB_PROJECT_ID+"/repository/commits/"+VS_GITLAB_BRANCH
         robot.http(api).header('PRIVATE-TOKEN', GITLAB_TOKEN).get() (err,r,body)->
@@ -184,17 +181,21 @@ module.exports=(robot)->
                 reason=[commit.title]
                 html=_genPushMailBody manager,branch,commitHash,reason,commit.author_name
 
-
                 msg="VS 新版本发布报告😏😏😏\n"
                 msg+="邮件发送给  #{manager}\n"
                 msg+="分支 : #{branch}\n"
                 msg+="最后修改人 : #{commit.author_name}\n"
                 msg+="Commit : #{commitHash}\n"
                 msg+="reson : #{reason}\n"
-
                 unless preview
                     _sendmail from,to,cc,body,html
                     res.send chalk.red "\n"+'send mail to '+to+"\n"
                     _sendMass res,msg,group,'' if group?
-
                 res.send msg
+
+    # ----------------------------------------------------------------------------------------
+    # Update source from gitlab on test server
+    # -----------------------------------------------------------------------------------------
+    robot.hear /@\s?push (.*)/i,(res)->
+        branch=res.match[1].trim()
+        ssh_cp branch
