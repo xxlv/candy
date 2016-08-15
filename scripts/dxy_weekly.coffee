@@ -36,20 +36,13 @@ genWeeklyMailBody=(t,n)->
     <div style="font-size:14px;height:auto;padding:15px 15px 10px 15px;*padding:15px 15px 0 15px;overflow:visible;min-height:100px;_height:100px;" class=" body">
     <div id="mailContentContainer" style="font-size: 14px; padding: 0px; height: auto; min-height: auto; font-family: 'lucida Grande', Verdana; margin-right: 170px;">
     <div><span style="font-family: '.SFNSText-Regular', 'SF UI Text', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif; font-size: 1.2em; line-height: 1.2;">
-
-
     <h4 id="-" style="font-family: '.SFNSText-Regular', 'SF UI Text', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif; font-size: 1.2em; line-height: 1.2; margin: 1.5em 0px 0.5em; box-sizing: border-box;">本周</h4>
-
     <ul style="font-family: '.SFNSText-Regular', 'SF UI Text', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif; font-size: 13.2px; line-height: 18.8571px; list-style: none; margin: 0px 0px 1.5em; padding: 15px; box-sizing: border-box;">
     #{("<li style='list-style: disc; margin: 0px; padding: 0px; box-sizing: border-box;'>#{thisweektask}</li>" for thisweektask in t).join('<br/>')}
     </ul>
-
     <h4 id="-" style="font-family: '.SFNSText-Regular', 'SF UI Text', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif; font-size: 1.2em; line-height: 1.2; margin: 1.5em 0px 0.5em; box-sizing: border-box;">下周</h4>
-
     <ul style="font-family: '.SFNSText-Regular', 'SF UI Text', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif; font-size: 13.2px; line-height: 18.8571px; list-style: none; margin: 0px 0px 1.5em; padding: 15px; box-sizing: border-box;">
-
     #{("<li style='list-style: disc; margin: 0px; padding: 0px; box-sizing: border-box;'>#{nextweektask}</li>" for nextweektask in n).join('<br/>')}
-
     </ul>
     <div>
     <br></div></div></div></sign></div><div><sign signid="0">
@@ -104,16 +97,13 @@ getweekly_task=(cb)->
     #         n:message for message in next_task
     #
         tasks=
-            t:['修复丁当反馈','完成HCP后台管理（90%）']
-            n:['接入腾讯视频点播']
+            t:['后台HCP管理 线上反馈修复','答题新增需求','腾讯视频(90%)']
+            n:['答题系统需求']
         cb tasks
-
-
-
 
 # Send Mail
 sendmail=(f,to,cc,body='',html='')->
-    name='吕翔'
+    name='吕翔翔'
     user=MAIL_USER
     pass=MAIL_PASS
 
@@ -138,7 +128,6 @@ sendmail=(f,to,cc,body='',html='')->
         auth:
             user:user,
             pass:pass
-
     transporter=nodemailer.createTransport(simpleconfig)
     transporter.sendMail mailoptions,(error,info)->
         report_staus error,info

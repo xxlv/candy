@@ -8,7 +8,7 @@
 #   None
 #
 # Commands:
-#
+# dinner $NAME - dinner for u
 # Author:
 #   x
 
@@ -23,16 +23,29 @@ _get_current_evn_ip=()->
 _get_pm_count=()->
     2
 
+ask_for_dinner=(robot,name,res)->
 
-ask_for_dinner=(robot)->
+    data=
+        name:"#{name}"
+        meetingId:"411"
+        meetingTitle:"杭州办晚餐预订"
+        teamId:"82"
+        applicationId:"6"
+        accountType:"3"
 
-    dinner_api='https://sim.dxy.cn/plugins/do/meeting/apply/411/82/6?ticket=DQPns5IcB06sGPjEzHYxfSNTXqXE4ehJ8VhAw231O0ZrXw99CQbaN3nKJNENdZX5'
-    robot.http(dinner_api).post() (e,r,b)->
-        # todo
-        console.log 'dinner '
+    dinner_api='https://sim.dxy.cn/plugins/do/meeting/submitapply'
+
+    data=JSON.stringify data
+    robot.http(dinner_api)
+    # .header('Content-Type', 'application/json')
+    .post(data) (err,res,body)->
+        # res.send "I ordered dinner for #{name} at #{new Date}"
+        
+
 
 
 module.exports = (robot) ->
 
-    robot.hear /dinner/,(res) ->
-        ask_for_dinner robot
+    robot.hear /@dinner(.*)/,(res) ->
+        name=res.match[1].trim()
+        ask_for_dinner robot,name,res
