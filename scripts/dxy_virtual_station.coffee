@@ -104,13 +104,20 @@ _sendmail=(f,to,cc,body='',html='')->
     transporter.sendMail mailoptions,(error,info)->
         _report_staus error,info
 
-
-# Mass message
-_sendMass=(res,body,group,user='')->
-
-    if res.robot.adapter.wxbot
-        wxrobot=res.robot.adapter.wxbot
-        wxrobot.sendMessage wxrobot.myUserName,group,user,body,(resp, resBody, opts) ->
+# create a note on gitlab
+log_gitlab=(msg,robot)->
+    issue_id=13
+    api=GITLAB_BASE_URL+"/api/v3/projects/"+GITLAB_PROJECT_ID+"/issues/#{issue_id}/notes"
+    data = JSON.stringify({
+        body: msg
+    })
+    robot.http(api)
+    .header('PRIVATE-TOKEN', GITLAB_TOKEN)
+    .header('Content-Type', 'application/json')
+    .post(data) (err,r,body)->
+        body=JSON.parse body
+        if body.id
+            console.log chalk.red "Auto sync gitlab by #{body.author.name}"
 
 ssh_cp=(branch)->
 
@@ -127,7 +134,7 @@ ssh_cp=(branch)->
             .on 'data',(data)->
                 console.log data.toString()
             .stderr.on 'data',(data)->
-                console.log "STDERR :#{data}"
+                console.log "SAY :#{data}"
 
     .connect {
         host:SERVER_IP,
@@ -181,21 +188,30 @@ module.exports=(robot)->
                 reason=[commit.title]
                 html=_genPushMailBody manager,branch,commitHash,reason,commit.author_name
 
-                msg="VS 新版本发布报告😏😏😏\n"
+                msg="VS 新版本发布报告\n"
                 msg+="邮件发送给  #{manager}\n"
                 msg+="分支 : #{branch}\n"
                 msg+="最后修改人 : #{commit.author_name}\n"
                 msg+="Commit : #{commitHash}\n"
                 msg+="reson : #{reason}\n"
                 unless preview
+                    gitlab_msg="**VS 新版本发布报告:100:**<br/>
+                                邮件发送给:  #{manager}<br/>
+                                分支 : #{branch}<br/>
+                                最后修改人 :#{commit.author_name}<br/>
+                                Commit : #{commitHash}<br/>
+                                reson : #{reason}<br/>
+                                "
                     _sendmail from,to,cc,body,html
+                    log_gitlab gitlab_msg,robot
                     res.send chalk.red "\n"+'send mail to '+to+"\n"
-                    _sendMass res,msg,group,'' if group?
                 res.send msg
 
     # ----------------------------------------------------------------------------------------
     # Update source from gitlab on test server
     # -----------------------------------------------------------------------------------------
-    robot.hear /@\s?push (.*)/i,(res)->
+    robot.hear /@\s?push(.*)/i,(res)->
         branch=res.match[1].trim()
+        if branch == ''
+            branch='master'
         ssh_cp branch
