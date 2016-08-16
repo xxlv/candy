@@ -17,6 +17,7 @@
 
 
 chalk=require 'chalk'
+moment=require 'moment'
 
 # -----------------------------------------------------------------------------------------
 #  config info here , you can read from a safe config file
@@ -144,6 +145,9 @@ ssh_cp=(branch)->
     }
 
 
+# ----------------------------------------------------------------------------------------
+# Robot logic
+# -----------------------------------------------------------------------------------------
 module.exports=(robot)->
     # Help
     robot.hear /@vs-help/i,(res)->
@@ -153,7 +157,6 @@ module.exports=(robot)->
         res.send help
     # Flush time
     robot.hear /@\s?vs flush(.*)/i,(res)->
-
         if 'online'==res.match[1].trim()
             url=vs_flush_time_online_url
         else
@@ -188,14 +191,18 @@ module.exports=(robot)->
                 reason=[commit.title]
                 html=_genPushMailBody manager,branch,commitHash,reason,commit.author_name
 
-                msg="VS 新版本发布报告\n"
+                msg="VS新版本发布报告\n"
                 msg+="邮件发送给  #{manager}\n"
                 msg+="分支 : #{branch}\n"
                 msg+="最后修改人 : #{commit.author_name}\n"
                 msg+="Commit : #{commitHash}\n"
                 msg+="reson : #{reason}\n"
+
                 unless preview
-                    gitlab_msg="**VS 新版本发布报告:100:**<br/>
+
+                    e=[':100:',':accept:',':dolls:']
+                    gitlab_msg="**VS 新版本发布报告#{res.random e}**<br/>
+                                时间:  #{moment().format('YYYY-MM-DD H:mm:ss')}<br/>
                                 邮件发送给:  #{manager}<br/>
                                 分支 : #{branch}<br/>
                                 最后修改人 :#{commit.author_name}<br/>
@@ -203,6 +210,7 @@ module.exports=(robot)->
                                 reson : #{reason}<br/>
                                 "
                     _sendmail from,to,cc,body,html
+                    # add a note for publish issue
                     log_gitlab gitlab_msg,robot
                     res.send chalk.red "\n"+'send mail to '+to+"\n"
                 res.send msg
