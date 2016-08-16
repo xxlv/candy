@@ -1,3 +1,0 @@
-test:
-    script:
-        - echo "hello world"
