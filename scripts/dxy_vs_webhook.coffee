@@ -1,5 +1,5 @@
 # Description:
-# 周报助手 自动生成周报
+# Virtual Station web hooks
 #
 # Dependencies:
 #   None
