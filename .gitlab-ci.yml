@@ -1,3 +1,3 @@
-job_name:
+test:
     script:
-    - echo "hello world"
+        - echo "hello world"
