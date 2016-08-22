@@ -196,7 +196,7 @@ module.exports=(robot)->
                 msg+="分支 : #{branch}\n"
                 msg+="最后修改人 : #{commit.author_name}\n"
                 msg+="Commit : #{commitHash}\n"
-                msg+="reson : #{reason}\n"
+                msg+="reason : #{reason}\n"
 
                 unless preview
 
@@ -207,7 +207,7 @@ module.exports=(robot)->
                                 分支 : #{branch}<br/>
                                 最后修改人 :#{commit.author_name}<br/>
                                 Commit : #{commitHash}<br/>
-                                reson : #{reason}<br/>
+                                reason : #{reason}<br/>
                                 "
                     _sendmail from,to,cc,body,html
                     # add a note for publish issue

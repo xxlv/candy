@@ -18,7 +18,6 @@
     "hubot-scripts": "^2.17.2",
     "hubot-shipit": "^0.2.0",
     "hubot-weixin":"^1.0.6",
-    "hubot-cron": ">= 0.1.0",
     "hubot-slack":"*",
     "cli-table":"*",
     "gitlab":"*",

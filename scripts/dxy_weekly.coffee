@@ -9,7 +9,7 @@
 #
 # Commands:
 #
-# @gen a new weekly report - 生成新周报
+# @gen a new weekly report - gen a new weekly report
 #
 # Author:
 #   x
@@ -97,8 +97,18 @@ getweekly_task=(cb)->
     #         n:message for message in next_task
     #
         tasks=
-            t:['后台HCP管理 线上反馈修复','答题新增需求','腾讯视频(90%)']
-            n:['答题系统需求']
+            t:[
+                '修复线上无法进入站点的bug',
+                '增加内容标签逻辑',
+                'HCP查询问题解决（修复分页）',
+                '腾讯视频调试(一点小问题尚未修复)',
+                '对全部互动数据增加pageid的支持'
+            ]
+            n:[
+                '修复色系bug',
+                '其余待定'
+
+            ]
         cb tasks
 
 # Send Mail
@@ -129,6 +139,7 @@ sendmail=(f,to,cc,body='',html='')->
             user:user,
             pass:pass
     transporter=nodemailer.createTransport(simpleconfig)
+    console.log subject
     transporter.sendMail mailoptions,(error,info)->
         report_staus error,info
 

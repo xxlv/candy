@@ -23,48 +23,52 @@ SSH_PRIVATE_KEY_PATH='/Users/xxlv/.ssh/id_rsa'
 SERVER_IP='192.168.200.27'
 SERVER_USERNAME='dxy'
 
-
 chalk=require 'chalk'
 
-deal_push=(b,res,robot)->
-    if b.object_kind=='push'
 
-        branch=b.ref
-        branch=branch.split 'refs/heads/'
-        branch=branch[1]
-        user_name=b.user_name
-        user_email=b.user_email
-        project=b.project.name
-        commit_count=b.total_commits_count
-        commits=b.commits
+# deal_push=(b,robot) ->
+    # if b.object_kind=='push'
+    #
+    #     branch=b.ref
+    #     branch=branch.split 'refs/heads/'
+    #     branch=branch[1]
+    #     user_name=b.user_name
+    #     user_email=b.user_email
+    #     project=b.project.name
+    #     commit_count=b.total_commits_count
+    #     commits=b.commits
+    #
+    #     # ssh_cp branch
+    #     msg="\n #{user_name}(#{user_email}) push #{commit_count} commits on #{project} -> #{branch}"
+    #     for commit in commits
+    #         msg+="\n Message:#{commit.message}  modified:#{chalk.red commit.modified.join(",")} "
+    #     console.log chalk.bold msg
+    # return
 
-        ssh_cp branch
-        msg="#{user_name}(#{user_email}) push #{commit_count} commits on #{project} -> #{branch}"
-        for commit in commits
-            msg+="\n Message:#{commit.message}  modified:#{chalk.red commit.modified.join(",")} "
-        console.log chalk.bold msg
 
-    return
+deal_push=(data,robot)->
+    branch=data.ref
+    branch=branch.split 'refs/heads/'
+    branch=branch[1]
+    # ssh_cp branch
+    for commit in data
+        console.log "New commit is comming : #{commit.message} "
 
-deal_issue=(b,res)->
-    return
+deal_issue=(data,robot)->
+    # console.log data
 
-deal_comment=(b,res)->
-    if b.object_kind=='note'
-        console.log "Recive new note : #{b.object_attributes.note}"
-    return
 
-deal_merge=(b,res)->
-    return
-
-deal_build=(b,res)->
-    return
-
-deal_wiki=(b,res)->
-    return
-
-deal_tag=(b,res)->
-    return
+# deal_merge=(b,res)->
+#     return
+#
+# deal_build=(b,res)->
+#     return
+#
+# deal_wiki=(b,res)->
+#     return
+#
+# deal_tag=(b,res)->
+#     return
 
 
 ssh_cp=(branch)->
@@ -82,7 +86,7 @@ ssh_cp=(branch)->
             .on 'data',(data)->
                 console.log data.toString()
             .stderr.on 'data',(data)->
-                console.log "SAY :#{data}"
+                console.log "#{data}"
 
     .connect {
         host:SERVER_IP,
@@ -92,15 +96,18 @@ ssh_cp=(branch)->
     }
 
 
+
+listeners =(robot)->
+    robot.on 'vs.issue',(data)->
+        deal_issue data,robot
+    robot.on 'vs.push',(data)->
+        deal_push data,robot
+
+
 module.exports=(robot)->
 
+    listeners robot
     robot.router.post '/vs/hook',(req,res)->
-
         body=req.body
-        deal_push body,res,robot
-        deal_issue body,res
-        deal_comment body,res
-        deal_merge body,res
-        deal_build body,res
-        deal_wiki body,res
-        deal_tag body,res
+        event_name="gitlab.#{body.object_kind}"
+        robot.emit event_name,body
