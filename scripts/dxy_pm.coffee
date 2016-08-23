@@ -65,7 +65,7 @@ class Redmine
             headers:
                 'content-type':'application/json'
             body:data
-            
+
         request req_body,(err,req,body) ->
             cb err,body
 
@@ -96,7 +96,10 @@ module.exports=(robot)->
                         description:issue.description
                         labels:"PM"
 
-                    robot.emit "gitlab.add.issue", gitlab_issue
+
+                    console.log gitlab_issue.title
+
+                    # robot.emit "gitlab.add.issue", gitlab_issue
 
 
                     #

@@ -73,8 +73,8 @@ _genPushMailBody=(manager,branch,commitHash,reasons=[],author='x')->
 
 # Resport send status
 _report_staus=(error,info)->
-    console.log(info)
-    console.log("发送邮件失败！"+ error) if error
+    console.log("Mail to >> #{chalk.red info.accepted.join(',')}")
+    console.log("Woops~ mail error"+ error) if error
 
 
 # Send mail

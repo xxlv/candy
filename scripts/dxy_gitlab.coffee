@@ -41,11 +41,10 @@ module.exports=(robot)->
     robot.hear /@list issues/i ,(res)->
         gitlab.listIssues GITLAB_PROJECT_ID,(err,body)->
             body=JSON.parse body
-            table=new Table {head:['title','state','updated_at','author']}
+            table=new Table {head:['id','title','state','updated_at','author']}
             for item in body
                 if item.state=='opened'
-                    table.push [item.title,item.state,item.updated_at,item.author.name]
-
+                    table.push [item.id,item.title,item.state,item.updated_at,item.author.name]
             console.log "\n"+table.toString()
 
 
@@ -115,4 +114,4 @@ commit_ops=(body) ->
     total_commits_count=body.total_commits_count
     commits=body.commits
     for commit in commits
-        console.log "New commit is comming : #{commit.message} "
+        console.log "New commit(@#{commit.id}) comming : #{chalk.red commit.message} "

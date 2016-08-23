@@ -13,6 +13,10 @@
 #   x
 
 os =require 'os'
+request=require 'request'
+querystring=require 'querystring'
+
+
 ifaces =os.networkInterfaces()
 company_ip= '192.168.200.179'
 
@@ -33,14 +37,22 @@ ask_for_dinner=(robot,name,res)->
         applicationId:"6"
         accountType:"3"
 
+    # data=querystring.stringify data
     dinner_api='https://sim.dxy.cn/plugins/do/meeting/submitapply'
 
-    data=JSON.stringify data
-    robot.http(dinner_api)
-    # .header('Content-Type', 'application/json')
-    .post(data) (err,res,body)->
-        # res.send "I ordered dinner for #{name} at #{new Date}"
-        
+    context=
+        url:dinner_api
+        method:'POST'
+        headers:
+            "Content-Type":"application/x-www-form-urlencoded"
+        form:data
+
+    request.post dinner_api,context,(err,response,body) ->
+        body=JSON.parse body
+        if parseInt body.code is 0
+            console.log  "I ordered dinner for #{name} at #{new Date}"
+        else
+            console.log  body
 
 
 
