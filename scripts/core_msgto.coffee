@@ -53,13 +53,15 @@ _sendmail=(subject,f,to,cc,body='',html='')->
 
 
 module.exports = (robot) ->
+    robot.on 'mail',(data)->
+        _sendmail data.subject,'lvxx@dxy.cn',data.to,null,data.msg,null
 
-    robot.hear /@\s*mailto*/i , (res)->
+    # robot.hear /@\s*mailto*/i , (res)->
         # to = res.match[1].trim()
         # msg=res.match[2].trim()
         # from=config.VS_MAIL_FROM
         # subject=msg.substring 0,18  if msg.nil?
 
-        console.log res.match
+        # console.log res.match
         # _sendmail subject,from,to,null,msg,null
         # res.send chalk.bold 'Send a mail to ' + chalk.red "#{to} "+ chalk.white '  MSG IS  '+chalk.bold msg

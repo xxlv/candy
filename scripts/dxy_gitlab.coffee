@@ -27,16 +27,20 @@ GITLAB_BASE_URL= 'http://gitlab.dxy.net'
 module.exports=(robot)->
 
     gitlab=new Gitlab GITLAB_BASE_URL,GITLAB_TOKEN
+    
     # listeners
     robot.on 'gitlab.add.issue',(issue)->
+
         gitlab.addIssue  GITLAB_PROJECT_ID,issue,(err,body)->
-            # console.log "I created a new issue for u \n #{issue.title}"
+            console.log "I created a new issue for u \n #{issue.title}"
 
     robot.on 'gitlab.update.issue',(issue)->
         gitlab.updateIssue GITLAB_PROJECT_ID,issue,(err,body)->
             # console.log "I updated a issue , the id is #{issue.issue_id}"
     robot.on 'gitlab.push',(body) ->
         commit_ops body
+
+
 
     robot.hear /@list issues/i ,(res)->
         gitlab.listIssues GITLAB_PROJECT_ID,(err,body)->
@@ -112,6 +116,7 @@ commit_ops=(body) ->
 
     body=JSON.parse body if typeof body isnt "object"
     total_commits_count=body.total_commits_count
+
     commits=body.commits
     for commit in commits
         console.log "New commit(@#{commit.id}) comming : #{chalk.red commit.message} "
