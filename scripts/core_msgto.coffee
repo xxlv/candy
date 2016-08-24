@@ -47,7 +47,7 @@ _sendmail=(subject,f,to,cc,body='',html='')->
     transporter=nodemailer.createTransport(simpleconfig)
 
     transporter.sendMail mailoptions,(error,info)->
-        console.log "Send mail ok"
+        # 
 
 
 
