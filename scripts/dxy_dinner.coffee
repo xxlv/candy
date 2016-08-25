@@ -46,14 +46,12 @@ ask_for_dinner=(robot,name)->
             "Content-Type":"application/x-www-form-urlencoded"
         form:data
 
-    console.log  "I ordered dinner for #{name} at #{moment().format('YYYY-MM-DD hh:m:s')}"
-
-    # request.post dinner_api,context,(err,response,body) ->
-    #     body=JSON.parse body
-    #     if  body.code is 0
-    #         console.log  "I ordered dinner for #{name} at #{moment().format('YYYY-MM-DD hh:m:s')}"
-    #     else
-    #         console.log  'Whoops,订餐失败啦～'
+    request.post dinner_api,context,(err,response,body) ->
+        body=JSON.parse body
+        if  body.code is 0
+            console.log  "I ordered dinner for #{name} at #{moment().format('YYYY-MM-DD hh:m:s')}"
+        else
+            console.log  'Whoops,订餐失败啦～'
 
 
 

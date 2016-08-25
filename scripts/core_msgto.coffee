@@ -47,14 +47,14 @@ _sendmail=(subject,f,to,cc,body='',html='')->
     transporter=nodemailer.createTransport(simpleconfig)
 
     transporter.sendMail mailoptions,(error,info)->
-        # 
+        #
 
 
 
 
 module.exports = (robot) ->
     robot.on 'mail',(data)->
-        _sendmail data.subject,'lvxx@dxy.cn',data.to,null,data.msg,null
+        _sendmail data.subject,MAIL_USER,data.to,null,data.msg,null
 
     # robot.hear /@\s*mailto*/i , (res)->
         # to = res.match[1].trim()

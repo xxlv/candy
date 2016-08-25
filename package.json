@@ -29,7 +29,8 @@
     "google-auth-library":"*",
     "moment":"*",
     "evernote":"*",
-    "ssh2":"*"
+    "ssh2":"*",
+    "hubot-redmine-ops":"*"
   },
   "engines": {
     "node": "0.10.x"

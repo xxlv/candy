@@ -13,7 +13,7 @@
 #   x
 
 HB_DXY_DINNER_DB_HOST='localhost'
-HB_DXY_DINNER_DB_NAME='homestead'
+HB_DXY_DINNER_DB_NAME='a3'
 HB_DXY_DINNER_DB_USER='root'
 HB_DXY_DINNER_DB_PASSWORD=''
 
@@ -30,9 +30,9 @@ conn=mysql.createConnection {
 }
 
 dinner=(robot,data) ->
-
     now_hour=moment().format("HH:mm")
-    dinner_time=data.dinner_time
+    dinner_time= data.dinner_time.substring 0,5
+
     return if now_hour!=dinner_time
 
     today=moment().format("YYYY-DD-MM").toString()
