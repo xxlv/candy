@@ -200,14 +200,13 @@ module.exports=(robot)->
 
                 unless preview
 
-                    e=[':100:',':accept:',':dolls:']
-                    gitlab_msg="**VS 新版本发布报告#{res.random e}**<br/>
-                                时间:  #{moment().format('YYYY-MM-DD H:mm:ss')}<br/>
-                                邮件发送给:  #{manager}<br/>
-                                分支 : #{branch}<br/>
-                                最后修改人 :#{commit.author_name}<br/>
-                                Commit : #{commitHash}<br/>
-                                reason : #{reason}<br/>
+                    gitlab_msg="** VS新版本发布报告**\n
+                                - 时间:  #{moment().format('YYYY-MM-DD H:mm:ss')}\n
+                                - 邮件发送给:  #{manager}\n
+                                - 分支 : #{branch}\n
+                                - 最后修改人 :#{commit.author_name}\n
+                                - Commit : #{commitHash}\n
+                                - reason : #{reason}\n
                                 "
                     _sendmail from,to,cc,body,html
                     # add a note for publish issue

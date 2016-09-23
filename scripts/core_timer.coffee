@@ -16,16 +16,15 @@
 moment=require 'moment'
 
 check_every_thing=(robot)->
-    random=Math.random()*100
-    hour=moment().hour()
-    robot.emit 'check.dxy.dinner' if hour>=12 and hour<=16
+    robot.emit 'check.dxy.dinner'
+
 
 
 doIt=(robot)->
     check_every_thing robot
     setTimeout ()->
         doIt(robot)
-    ,1000
+    ,1000*3
 
 module.exports=(robot) ->
-    console.log 'robot'
+    doIt(robot)

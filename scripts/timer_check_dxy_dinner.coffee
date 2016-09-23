@@ -30,6 +30,7 @@ conn=mysql.createConnection {
 }
 
 dinner=(robot,data) ->
+
     now_hour=moment().format("HH:mm")
     dinner_time= data.dinner_time.substring 0,5
 
@@ -39,6 +40,7 @@ dinner=(robot,data) ->
     begin_at=new Date data.begin_at
     end_at=new Date data.end_at
     name=data.name
+    uid=data.uid
 
     mail_body={
         subject:'Dinner',
@@ -51,8 +53,9 @@ dinner=(robot,data) ->
             if rows.length==0
                 sql="INSERT INTO dinners_log (uid,dt,status) VALUES ('#{data.uid}','#{today}','1')";
                 conn.query sql,(err,rows,fields)->
+
                     robot.emit 'mail',mail_body
-                    robot.emit 'dxy.dinner',name
+                    robot.emit 'dxy.dinner',{name:name,uid:uid}
 
 
 #
