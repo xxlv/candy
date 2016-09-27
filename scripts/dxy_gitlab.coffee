@@ -27,7 +27,7 @@ GITLAB_BASE_URL= 'http://gitlab.dxy.net'
 module.exports=(robot)->
 
     gitlab=new Gitlab GITLAB_BASE_URL,GITLAB_TOKEN
-    
+
     # listeners
     robot.on 'gitlab.add.issue',(issue)->
 
@@ -119,4 +119,5 @@ commit_ops=(body) ->
 
     commits=body.commits
     for commit in commits
+        console.log commit 
         console.log "New commit(@#{commit.id}) comming : #{chalk.red commit.message} "

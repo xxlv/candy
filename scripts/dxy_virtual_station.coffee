@@ -199,15 +199,13 @@ module.exports=(robot)->
                 msg+="reason : #{reason}\n"
 
                 unless preview
-
-                    gitlab_msg="** VS新版本发布报告**\n
-                                - 时间:  #{moment().format('YYYY-MM-DD H:mm:ss')}\n
-                                - 邮件发送给:  #{manager}\n
-                                - 分支 : #{branch}\n
-                                - 最后修改人 :#{commit.author_name}\n
-                                - Commit : #{commitHash}\n
-                                - reason : #{reason}\n
-                                "
+                    gitlab_msg="**VS新版本发布报告**
+                    - 时间:  #{moment().format('YYYY-MM-DD H:mm:ss')}
+                    - 邮件发送给:  #{manager}
+                    - 分支 : #{branch}
+                    - 最后修改人 :#{commit.author_name}
+                    - Commit : #{commitHash}
+                    - reason : #{reason}"
                     _sendmail from,to,cc,body,html
                     # add a note for publish issue
                     log_gitlab gitlab_msg,robot

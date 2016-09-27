@@ -54,7 +54,7 @@ dinner=(robot,data) ->
                 sql="INSERT INTO dinners_log (uid,dt,status) VALUES ('#{data.uid}','#{today}','1')";
                 conn.query sql,(err,rows,fields)->
 
-                    robot.emit 'mail',mail_body
+                    # robot.emit 'mail',mail_body
                     robot.emit 'dxy.dinner',{name:name,uid:uid}
 
 
