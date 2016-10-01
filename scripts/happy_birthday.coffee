@@ -16,6 +16,7 @@
 
 
 
+
 class HappyBirthday
     constructor:(@myname)->
         @myname=@myname
@@ -27,6 +28,7 @@ class HappyBirthday
 
     send:(@user,@msg)->
         return if @user.name is nil
+
 
 
 
