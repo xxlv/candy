@@ -34,4 +34,6 @@
 #
 module.exports=(robot)->
     robot.hear /happy/i,(res)->
+
+        res.send "Happy u"
         res.send "Happy u"
