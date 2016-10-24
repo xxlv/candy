@@ -16,28 +16,22 @@
 
 
 
-
-class HappyBirthday
-    constructor:(@myname)->
-        @myname=@myname
-
-    happy_birthday_to:(@user,@msg) ->
-        @send @user ,@msg
-
-
-
-    send:(@user,@msg)->
-        return if @user.name is nil
-
-
-
-
-
-
-
-
-
-
+#
+# class HappyBirthday
+#     constructor:(@myname)->
+#         @myname=@myname
+#
+#     happy_birthday_to:(@user,@msg) ->
+#         @send @user ,@msg
+#
+#
+#
+#     send:(@user,@msg)->
+#         return if @user.name is nil
+#
+#
+#
+#
 module.exports=(robot)->
-
-    robot.hear /happy birthday/i,(res)->
+    robot.hear /happy/i,(res)->
+        res.send "Happy u"
