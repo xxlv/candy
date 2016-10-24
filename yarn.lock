@@ -785,9 +785,9 @@ hubot-slack@*:
     "@slack/client" "^3.4.0"
     lodash "^3.10.1"
 
-hubot-weixin-2@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/hubot-weixin-2/-/hubot-weixin-2-1.1.0.tgz#d6c5ae4dae248584dfce2f955d1c3b49ef832cda"
+hubot-weixin-2@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/hubot-weixin-2/-/hubot-weixin-2-1.1.2.tgz#f3fe3556cdffb11d945be60c6aa80d25ff1a8476"
   dependencies:
     file-md5 "1.0.0"
     js-yaml ">= 3.0.0"
